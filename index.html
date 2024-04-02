@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Odin Calculator</title>
+  </head>
+  <body>
+    <div class="flex column" id="calculator">
+      <div class="red" id="visor-container">
+        <input type="text" name="visor" id="visor" title="visor" />
+      </div>
+      <div class="flex column" id="buttons-container">
+        <div class="flex" id="top-row">
+          <button class="utility" id="CE">CE</button>
+          <button class="operator" id="divide">÷</button>
+          <button class="operator" id="multiply">*</button>
+          <button class="utility" id="backspace">⌫</button>
+        </div>
+        <div class="flex" id="botton-row">
+          <div class="flex column" id="numbers-container">
+            <div class="flex flex-item" id="numbers-row-1">
+              <button class="number" id="7">7</button>
+              <button class="number" id="8">8</button>
+              <button class="number" id="9">9</button>
+            </div>
+            <div class="flex flex-item" id="numbers-row-2">
+              <button class="number" id="4">4</button>
+              <button class="number" id="5">5</button>
+              <button class="number" id="6">6</button>
+            </div>
+            <div class="flex flex-item" id="numbers-row-3">
+              <button class="number" id="1">1</button>
+              <button class="number" id="2">2</button>
+              <button class="number" id="3">3</button>
+            </div>
+            <div class="flex flex-item" id="numbers-row-4">
+              <button class="number" id="empty"><span></span></button>
+              <button class="number" id="0">0</button>
+              <button class="number" id=".">.</button>
+            </div>
+          </div>
+          <div class="flex column flex-item" id="side-buttons">
+            <button class="operator" id="subtract">-</button>
+            <button class="operator" id="add">+</button>
+            <button class="utility" id="equals">=</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
