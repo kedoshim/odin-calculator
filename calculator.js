@@ -1,9 +1,6 @@
 //Global Variables
 let hasToReset = false;
 
-//Calculator
-const calculator = document.querySelector("#calculator");
-
 //Visor
 const visor = document.querySelector("#visor");
 
@@ -35,8 +32,8 @@ numbers[9] = document.querySelector("#nine");
 
 //Event Listener
 
-calculator.addEventListener("click", (e) => clickEventListener(e));
-calculator.addEventListener("keydown", (e) => keydownEventListener(e));
+document.addEventListener("click", (e) => clickEventListener(e));
+document.addEventListener("keydown", (e) => keydownEventListener(e));
 
 function clickEventListener(event_info) {
   switch (event_info.target) {
@@ -100,7 +97,7 @@ function clickEventListener(event_info) {
 }
 
 function keydownEventListener(event_info) {
-  console.log(event_info.key)
+  console.log(event_info.key);
   switch (event_info.key) {
     case "+":
     case "Add":
@@ -165,6 +162,16 @@ function keydownEventListener(event_info) {
       return;
   }
 }
+
+//Disable Tab and Enter default behavior
+window.addEventListener("keydown", function (e) {
+  if (e.key === "Tab") {
+    e.preventDefault();
+  }
+  if (e.key === "Enter") {
+    e.preventDefault();
+  }
+});
 
 //Functions
 function addNumber(n1, n) {
