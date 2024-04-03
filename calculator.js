@@ -126,6 +126,8 @@ function keydownEventListener(event_info) {
     case "Enter":
       operate();
       return;
+    case ',':
+    case '.':
     case "Decimal":
       addDot();
       return;
