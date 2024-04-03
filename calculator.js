@@ -1,6 +1,9 @@
 //Global Variables
 let hasToReset = false;
 
+//Calculator
+const calculator = document.querySelector("#calculator");
+
 //Visor
 const visor = document.querySelector("#visor");
 
@@ -10,21 +13,11 @@ const subtract = document.querySelector("#subtract");
 const divide = document.querySelector("#divide");
 const multiply = document.querySelector("#multiply");
 
-add.addEventListener("click", insertAdd);
-subtract.addEventListener("click", insertSubtract);
-divide.addEventListener("click", insertDivide);
-multiply.addEventListener("click", insertMultiply);
-
 //Utilities
 const CE = document.querySelector("#CE");
 const backspace = document.querySelector("#backspace");
 const equals = document.querySelector("#equals");
 const dot = document.querySelector("#dot");
-
-CE.addEventListener("click", clear);
-backspace.addEventListener("click", backspaceNumber);
-equals.addEventListener("click", operate);
-dot.addEventListener("click", addDot);
 
 //Numbers
 const numbers = [];
@@ -40,11 +33,70 @@ numbers[7] = document.querySelector("#seven");
 numbers[8] = document.querySelector("#eight");
 numbers[9] = document.querySelector("#nine");
 
-numbers.forEach((number) =>
-  number.addEventListener("click", (e) =>
-    insertNumber(parseInt(e.target.textContent))
-  )
-);
+//Event Listener
+
+calculator.addEventListener("click", (e) => clickEventListener(e));
+
+function clickEventListener(event_info) {
+  switch (event_info.target) {
+    case add:
+      insertAdd();
+      return;
+    case subtract:
+      insertSubtract();
+      return;
+    case divide:
+      insertDivide();
+      return;
+    case multiply:
+      insertMultiply();
+      return;
+
+    case CE:
+      clear();
+      return;
+    case backspace:
+      removeLastChar();
+      return;
+    case equals:
+      operate();
+      return;
+    case dot:
+      addDot();
+      return;
+
+    case numbers[0]:
+      insertNumber("0");
+      return;
+    case numbers[1]:
+      insertNumber("1");
+      return;
+    case numbers[2]:
+      insertNumber("2");
+      return;
+    case numbers[3]:
+      insertNumber("3");
+      return;
+    case numbers[4]:
+      insertNumber("4");
+      return;
+    case numbers[5]:
+      insertNumber("5");
+      return;
+    case numbers[6]:
+      insertNumber("6");
+      return;
+    case numbers[7]:
+      insertNumber("7");
+      return;
+    case numbers[8]:
+      insertNumber("8");
+      return;
+    case numbers[9]:
+      insertNumber("9");
+      return;
+  }
+}
 
 //Functions
 function addNumber(n1, n) {
@@ -88,7 +140,7 @@ function clear() {
   visor.textContent = "";
 }
 
-function backspaceNumber() {
+function removeLastChar() {
   visor.textContent = visor.textContent.slice(0, -1);
   hasToReset = false;
 }
