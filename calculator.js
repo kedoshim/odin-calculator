@@ -121,14 +121,14 @@ function backspaceNumber() {
 }
 
 function calculate() {
-  reset();
   console.log(current_funtion);
-  if (current_funtion == undefined || current_funtion=="") {
+  if (current_funtion == undefined || current_funtion == "") {
     hasToReset = true;
     visor.textContent = parseInt(current_number);
     return;
   }
   if (current_number === "") current_number = 0;
+  console.log(current_number);
   let result = current_funtion(parseInt(current_number));
   visor.textContent = result;
   current_number = result;
