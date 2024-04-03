@@ -36,6 +36,7 @@ numbers[9] = document.querySelector("#nine");
 //Event Listener
 
 calculator.addEventListener("click", (e) => clickEventListener(e));
+calculator.addEventListener("keydown", (e) => keydownEventListener(e));
 
 function clickEventListener(event_info) {
   switch (event_info.target) {
@@ -93,6 +94,73 @@ function clickEventListener(event_info) {
       insertNumber("8");
       return;
     case numbers[9]:
+      insertNumber("9");
+      return;
+  }
+}
+
+function keydownEventListener(event_info) {
+  console.log(event_info.key)
+  switch (event_info.key) {
+    case "+":
+    case "Add":
+      insertAdd();
+      return;
+    case "-":
+    case "Subtract":
+      insertSubtract();
+      return;
+    case "/":
+    case "Divide":
+      insertDivide();
+      return;
+    case "*":
+    case "Multiply":
+      insertMultiply();
+      return;
+
+    case "Clear":
+    case "Escape":
+      clear();
+      return;
+    case "Backspace":
+      removeLastChar();
+      return;
+    case "Enter":
+      operate();
+      return;
+    case "Decimal":
+      addDot();
+      return;
+
+    case "0":
+      insertNumber("0");
+      return;
+    case "1":
+      insertNumber("1");
+      return;
+    case "2":
+      insertNumber("2");
+      return;
+    case "3":
+      insertNumber("3");
+      return;
+    case "4":
+      insertNumber("4");
+      return;
+    case "5":
+      insertNumber("5");
+      return;
+    case "6":
+      insertNumber("6");
+      return;
+    case "7":
+      insertNumber("7");
+      return;
+    case "8":
+      insertNumber("8");
+      return;
+    case "9":
       insertNumber("9");
       return;
   }
