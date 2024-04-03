@@ -72,9 +72,13 @@ body {
 }
 
 #visor {
+  display: flex;
+  align-items: center;
+  justify-content: end;
   background-color: rgb(173, 154, 132);
-  direction: rtl;
   flex: 1;
+  padding: 2%;
+  font-size: 6vh;
 }
 
 #buttons-container {

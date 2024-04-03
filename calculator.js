@@ -49,87 +49,88 @@ numbers.forEach((number) =>
 );
 
 //Functions
-function addNumber(n1, n2) {
-  return n1 + n2;
+function addNumber(n1, n) {
+  return n1 + n;
 }
-function subtractNumber(n1, n2) {
-  return n1 - n2;
+function subtractNumber(n1, n) {
+  return n1 - n;
 }
-function multiplyNumber(n1, n2) {
-  return n1 * n2;
+function multiplyNumber(n1, n) {
+  return n1 * n;
 }
-function divideNumber(n1, n2) {
-  return n1 / n2;
+function divideNumber(n1, n) {
+  return n1 / n;
 }
 
 function insertNumber(number) {
   reset();
   if (!isNaN(number)) {
     current_number += number;
-    visor.value += number;
+    visor.textContent += number;
   }
-  console.log(current_number);
+  // console.log(current_number);
 }
 
 function insertAdd() {
   hasToReset = false;
-  visor.value += "+";
+  visor.textContent += "+";
   let number = current_number;
   current_number = "";
-  current_funtion = function (n2) {
-    return addNumber(parseInt(number), n2);
+  current_funtion = function (n) {
+    return addNumber(parseInt(number), n);
   };
 }
 function insertSubtract() {
   hasToReset = false;
-  visor.value += "-";
+  visor.textContent += "-";
   let number = current_number;
   current_number = "";
-  current_funtion = function (n2) {
-    return subtractNumber(parseInt(number), n2);
+  current_funtion = function (n) {
+    return subtractNumber(parseInt(number), n);
   };
 }
 function insertMultiply() {
   hasToReset = false;
-  visor.value += "*";
+  visor.textContent += "*";
   let number = current_number;
   current_number = "";
-  current_funtion = function (n2) {
-    return multiplyNumber(current_funtion(parseInt(number)), n2);
+  current_funtion = function (n) {
+    return multiplyNumber(current_funtion(parseInt(number)), n);
   };
 }
 function insertDivide() {
   hasToReset = false;
-  visor.value += "/";
+  visor.textContent += "/";
   let number = current_number;
   current_number = "";
-  current_funtion = function (n2) {
-    return divideNumber(current_funtion(parseInt(number)), n2);
+  current_funtion = function (n) {
+    return divideNumber(current_funtion(parseInt(number)), n);
   };
 }
 
 function clear() {
-  visor.value = "";
-  current_funtion = () => {};
+  visor.textContent = "";
+  current_funtion = "";
   current_number = "";
 }
 
 function backspaceNumber() {
   current_number = current_number.slice(0, -1);
-  visor.value = visor.value.slice(0, -1);
+  visor.textContent = visor.textContent.slice(0, -1);
   hasToReset = false;
 }
 
 function calculate() {
   reset();
   console.log(current_funtion);
-  if (current_funtion == undefined) {
-    visor.value = parseInt(current_number);
+  if (current_funtion == undefined || current_funtion=="") {
     hasToReset = true;
+    visor.textContent = parseInt(current_number);
     return;
   }
+  if (current_number === "") current_number = 0;
   let result = current_funtion(parseInt(current_number));
-  visor.value = result;
+  visor.textContent = result;
   current_number = result;
   current_funtion = () => {};
   hasToReset = true;
