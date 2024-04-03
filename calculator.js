@@ -1,6 +1,4 @@
 //Global Variables
-let current_number = "";
-let current_funtion;
 let hasToReset = false;
 
 //Visor
@@ -25,7 +23,7 @@ const dot = document.querySelector("#dot");
 
 CE.addEventListener("click", clear);
 backspace.addEventListener("click", backspaceNumber);
-equals.addEventListener("click", calculate);
+equals.addEventListener("click", operate);
 dot.addEventListener("click", addDot);
 
 //Numbers
@@ -65,79 +63,133 @@ function divideNumber(n1, n) {
 function insertNumber(number) {
   reset();
   if (!isNaN(number)) {
-    current_number += number;
     visor.textContent += number;
   }
-  // console.log(current_number);
 }
 
 function insertAdd() {
   hasToReset = false;
   visor.textContent += "+";
-  let number = current_number;
-  current_number = "";
-  current_funtion = function (n) {
-    return addNumber(parseInt(number), n);
-  };
 }
 function insertSubtract() {
   hasToReset = false;
   visor.textContent += "-";
-  let number = current_number;
-  current_number = "";
-  current_funtion = function (n) {
-    return subtractNumber(parseInt(number), n);
-  };
 }
 function insertMultiply() {
   hasToReset = false;
   visor.textContent += "*";
-  let number = current_number;
-  current_number = "";
-  current_funtion = function (n) {
-    return multiplyNumber(current_funtion(parseInt(number)), n);
-  };
 }
 function insertDivide() {
   hasToReset = false;
   visor.textContent += "/";
-  let number = current_number;
-  current_number = "";
-  current_funtion = function (n) {
-    return divideNumber(current_funtion(parseInt(number)), n);
-  };
 }
 
 function clear() {
   visor.textContent = "";
-  current_funtion = "";
-  current_number = "";
 }
 
 function backspaceNumber() {
-  current_number = current_number.slice(0, -1);
   visor.textContent = visor.textContent.slice(0, -1);
   hasToReset = false;
 }
 
-function calculate() {
-  console.log(current_funtion);
-  if (current_funtion == undefined || current_funtion == "") {
-    hasToReset = true;
-    visor.textContent = parseInt(current_number);
+function mapInfiniteDepth(array, callback) {
+  // console.log(array);
+  let new_array = array.map((element) => {
+    if (Array.isArray(element)) {
+      return mapInfiniteDepth(element, callback); // Recursively call the function for nested arrays
+    } else {
+      element = callback(element); // Call the callback function for non-array elements
+      return element;
+    }
+  });
+  // console.log(new_array);
+  return new_array;
+}
+
+function reduceFixedDepth(array, depth, callback) {
+  return array.map((item) => {
+    if (Array.isArray(item)) {
+      if (depth === 0) {
+        return callback(item);
+      }
+      return reduceFixedDepth(item, depth - 1, callback); // Recursively call the function for nested arrays
+    } else {
+      return item;
+    }
+  });
+}
+
+function logMultiArray(multi_array, log = true) {
+  let str = "";
+  if (Array.isArray(multi_array)) {
+    str = " [";
+    str += multi_array.map((array) => logMultiArray(array, false));
+    str += "]";
+  } else {
+    str += " " + multi_array;
+  }
+  if (log) {
+    console.log("MultiArray -> ", str);
     return;
   }
-  if (current_number === "") current_number = 0;
-  console.log(current_number);
-  let result = current_funtion(parseInt(current_number));
-  visor.textContent = result;
-  current_number = result;
-  current_funtion = () => {};
+  return str + " ";
+}
+
+function operate() {
+  let text = visor.textContent;
+
+  let tokens = [text];
+
+  operators = ["+", "-", "*", "/"];
+
+  operators.forEach((operator) => {
+    tokens = mapInfiniteDepth(tokens, (token) => {
+      token = "" + token;
+      token = token.split(operator).map((inside_token) => inside_token.trim());
+      if (token.length === 1 && Array.isArray(token) && !isNaN(token[0])) {
+        token = token[0];
+      }
+      return token;
+    });
+  });
+  logMultiArray(tokens);
+
+  for (let i = 3; i >= 0; i--) {
+    tokens = reduceFixedDepth(tokens, i, (array) => {
+      switch (i) {
+        case 0:
+          //add
+          return array.reduce((total, item) => {
+            return parseFloat(total) + parseFloat(item);
+          });
+        case 1:
+          //subtract
+          return array.reduce((total, item) => {
+            return parseFloat(total) - parseFloat(item);
+          });
+        case 2:
+          //multiply
+          return array.reduce((total, item) => {
+            return parseFloat(total) * parseFloat(item);
+          }, 1);
+        case 3:
+          //divide
+          return array.reduce((total, item) => {
+            return parseFloat(total) / parseFloat(item);
+          });
+      }
+    });
+  }
+  let result = tokens[0];
+  console.log("result => ", result);
   hasToReset = true;
+
+  visor.textContent = result;
 }
 
 function addDot() {
-  current_number += ".";
+  visor.textContent += ".";
 }
 
 function reset() {
